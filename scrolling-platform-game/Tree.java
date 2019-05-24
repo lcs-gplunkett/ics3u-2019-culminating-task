@@ -6,14 +6,14 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author R. Gordon
  * @version May 8, 2019
  */
-public class Fence extends Decoration
+public class Tree extends Decoration
 {
     /**
      * Constructor
      * 
      * Called once when object is created.
      */
-    Fence(int scrollableWorldX, int scrollableWorldY)
+    Tree(int scrollableWorldX, int scrollableWorldY)
     {
         super(scrollableWorldX, scrollableWorldY);
     }

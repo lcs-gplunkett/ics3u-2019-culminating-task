@@ -21,8 +21,8 @@ public class SideScrollingWorld extends World
     private static final int VISIBLE_HEIGHT = 480;
     public static final int HALF_VISIBLE_WIDTH = VISIBLE_WIDTH / 2;
     private static final int HALF_VISIBLE_HEIGHT = VISIBLE_HEIGHT / 2;
-    public static final int SCROLLABLE_WIDTH = VISIBLE_WIDTH * 3;
-    private static final int SCROLLABLE_HEIGHT = VISIBLE_HEIGHT;
+    public static final int SCROLLABLE_WIDTH = VISIBLE_WIDTH;
+    private static final int SCROLLABLE_HEIGHT = VISIBLE_HEIGHT * 3;
 
     // Hero
     Hero theHero;
@@ -92,29 +92,29 @@ public class SideScrollingWorld extends World
         // Three fences on left side of world
         int x = TILE_SIZE / 2 + TILE_SIZE * 5;
         int y = VISIBLE_HEIGHT - TILE_SIZE / 2 - TILE_SIZE;
-        Fence fence1 = new Fence(x, y);
-        addObject(fence1, x, y);
+        Tree tree1 = new Tree(x, y);
+        addObject(tree1, x, y);
 
         x = TILE_SIZE / 2 + TILE_SIZE * 6;
         y = VISIBLE_HEIGHT - TILE_SIZE / 2 - TILE_SIZE;        
-        Fence fence2 = new Fence(x, y);
-        addObject(fence2, x, y);
+        Tree tree2 = new Tree(x, y);
+        addObject(tree2, x, y);
 
         x = TILE_SIZE / 2 + TILE_SIZE * 7;
         y = VISIBLE_HEIGHT - TILE_SIZE / 2 - TILE_SIZE;
-        Fence fence3 = new Fence(x, y);
-        addObject(fence3, x, y);
+        Tree tree3 = new Tree(x, y);
+        addObject(tree3, x, y);
 
         // Two fences on right side of world
-        x = SCROLLABLE_WIDTH - TILE_SIZE / 2 - TILE_SIZE * 3;
+        x = SCROLLABLE_WIDTH - TILE_SIZE / 2 - TILE_SIZE * 2;
         y = VISIBLE_HEIGHT / 2;
-        Fence fence4 = new Fence(x, y);
-        addObject(fence4, x, y);
+        Tree tree4 = new Tree(x, y);
+        addObject(tree4, x, y);
 
         x = SCROLLABLE_WIDTH - TILE_SIZE / 2 - TILE_SIZE * 4;
         y = VISIBLE_HEIGHT / 2;
-        Fence fence5 = new Fence(x, y);
-        addObject(fence5, x, y);
+        Tree tree5 = new Tree(x, y);
+        addObject(tree5, x, y);
     }
 
     /**
@@ -124,7 +124,7 @@ public class SideScrollingWorld extends World
     {
         // How many plates total?
         final int COUNT_OF_METAL_PLATES = 20;
-        final int PLATES_PER_GROUP = 4;
+        final int PLATES_PER_GROUP = 1;
 
         // Add groups of plates
         for (int i = 0; i < COUNT_OF_METAL_PLATES / PLATES_PER_GROUP; i += 1)
@@ -185,37 +185,37 @@ public class SideScrollingWorld extends World
     private void addRightGround()
     {
         // Constants to control dimensions of the ground at end of world
-        final int COUNT_OF_GROUND = 8;
-        final int GROUND_BELOW_COLUMNS = COUNT_OF_GROUND;
-        final int GROUND_BELOW_ROWS = 6;
-        final int COUNT_OF_GROUND_BELOW = GROUND_BELOW_COLUMNS * GROUND_BELOW_ROWS;
+        //final int COUNT_OF_GROUND = 8;
+        //final int GROUND_BELOW_COLUMNS = COUNT_OF_GROUND;
+        //final int GROUND_BELOW_ROWS = 6;
+        //final int COUNT_OF_GROUND_BELOW = GROUND_BELOW_COLUMNS * GROUND_BELOW_ROWS;
 
         // 1. Make ground at end of level (top layer)
-        for (int i = 0; i < COUNT_OF_GROUND; i += 1)
-        {
-            // Position in wider scrollable world
-            int x = SCROLLABLE_WIDTH - TILE_SIZE / 2 - i * TILE_SIZE;
-            int y = VISIBLE_HEIGHT / 2 + TILE_SIZE;
+        //for (int i = 0; i < COUNT_OF_GROUND; i += 1)
+        //{
+        // Position in wider scrollable world
+        //int x = SCROLLABLE_WIDTH - TILE_SIZE / 2 - i * TILE_SIZE;
+        //int y = VISIBLE_HEIGHT / 2 + TILE_SIZE;
 
-            // Create object and add it
-            Ground ground = new Ground(x, y);
-            addObject(ground, x, y);
-        }
+        // Create object and add it
+        //Ground ground = new Ground(x, y);
+        //addObject(ground, x, y);
+        //}
 
         // 2. Make sub-ground at end of level (below top layer)
-        for (int i = 0; i < GROUND_BELOW_COLUMNS; i += 1)
-        {
-            for (int j = 0; j < GROUND_BELOW_ROWS; j += 1)
-            {
-                // Position in wider scrollable world
-                int x = SCROLLABLE_WIDTH - TILE_SIZE / 2 - i * TILE_SIZE;
-                int y = VISIBLE_HEIGHT / 2 + TILE_SIZE + TILE_SIZE * (j + 1);
+        //for (int i = 0; i < GROUND_BELOW_COLUMNS; i += 1)
+        //{
+        //    for (int j = 0; j < GROUND_BELOW_ROWS; j += 1)
+        //    {
+        //        // Position in wider scrollable world
+        //        int x = SCROLLABLE_WIDTH - TILE_SIZE / 2 - i * TILE_SIZE;
+        //        int y = VISIBLE_HEIGHT / 2 + TILE_SIZE + TILE_SIZE * (j + 1);
 
-                // Create object and add it
-                GroundBelow groundBelow = new GroundBelow(x, y);
-                addObject(groundBelow, x, y);
-            }
-        }
+        //     // Create object and add it
+        //   GroundBelow groundBelow = new GroundBelow(x, y);
+        //   addObject(groundBelow, x, y);
+        //}
+        //}
     }
 
     /**

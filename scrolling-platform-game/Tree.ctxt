@@ -1,8 +1,8 @@
 #BlueJ class context
-comment0.target=Fence
+comment0.target=Tree
 comment0.text=\n\ Basic\ ground\ object.\n\ \n\ @author\ R.\ Gordon\n\ @version\ May\ 8,\ 2019\n
 comment1.params=scrollableWorldX\ scrollableWorldY
-comment1.target=Fence(int,\ int)
+comment1.target=Tree(int,\ int)
 comment1.text=\n\ Constructor\n\ \n\ Called\ once\ when\ object\ is\ created.\n
 comment2.params=
 comment2.target=void\ act()

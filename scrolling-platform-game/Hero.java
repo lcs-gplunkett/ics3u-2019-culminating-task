@@ -99,7 +99,7 @@ public class Hero extends Actor
         checkFall();
         if (!isGameOver)
         {
-            checkGameOver();
+            //checkGameOver();
         }
     }
 
@@ -510,10 +510,10 @@ public class Hero extends Actor
      */
     public void checkGameOver()
     {
-        // Get object reference to world
+         //Get object reference to world
         SideScrollingWorld world = (SideScrollingWorld) getWorld(); 
 
-        // Vertical position where hero no longer visible
+         //Vertical position where hero no longer visible
         int offScreenVerticalPosition = (world.getHeight() + this.getImage().getHeight() / 2);
 
         // Off bottom of screen?
