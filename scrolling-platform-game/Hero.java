@@ -241,7 +241,7 @@ public class Hero extends Actor
     public void fall()
     {
         // See if direction has changed
-        if (deltaY > 0)
+        if (deltaX > 0)
         {
             verticalDirection = JUMPING_DOWN;
 
@@ -343,7 +343,7 @@ public class Hero extends Actor
             // So... actually move the actor within the visible world.
 
             // Allow movement only when not at edge of world
-            if (currentScrollableWorldYPosition < world.SCROLLABLE_HEIGHT - this.getImage().getWidth() / 2)
+            if ( currentScrollableWorldYPosition < world.SCROLLABLE_HEIGHT - this.getImage().getWidth() / 2)
             {
                 // Move to right in visible world
                 int newVisibleWorldYPosition = getY() + deltaY;
@@ -448,7 +448,7 @@ public class Hero extends Actor
             {
                 // Move left in visible world
                 int newVisibleWorldYPosition = getY() - deltaY;
-                setLocation(getX(),newVisibleWorldYPosition);
+                setLocation(getX() ,newVisibleWorldYPosition);
 
                 // Track position in wider scrolling world
                 currentScrollableWorldYPosition = getY();
@@ -493,7 +493,7 @@ public class Hero extends Actor
             for (Decoration decoration: decorations)
             {
                 // Platforms move right to make hero appear to move left
-                decoration.moveRight(deltaX);
+                decoration.moveRight(deltaY);
             }
 
             // Get a list of all items that are in the distance (far away items)
@@ -503,13 +503,13 @@ public class Hero extends Actor
             for (FarAwayItem farAwayItem : farAwayItems)
             {
                 // FarAwayItems move right to make hero appear to move left
-                farAwayItem.moveRight(deltaX / 4);
+                farAwayItem.moveRight(deltaY / 4);
             }
 
         } 
 
     }
-
+    
     /**
      * When the hero falls off the bottom of the screen,
      * game is over. We must remove them.

@@ -33,7 +33,7 @@ public abstract class Tile extends Actor
      */
     public void moveLeft(int speed)
     {
-        setLocation(getX() - speed, getY());
+        setLocation(getX(), getY() - speed);
     }
 
     /**
@@ -41,7 +41,7 @@ public abstract class Tile extends Actor
      */
     public void moveRight(int speed)
     {
-        setLocation(getX() + speed, getY());
+        setLocation(getX(), getY() + speed);
     }
     
 }
