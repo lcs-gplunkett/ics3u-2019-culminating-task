@@ -17,8 +17,8 @@ public class SideScrollingWorld extends World
     private static final int TILE_SIZE = 32;
 
     // World size constants
-    private static final int VISIBLE_WIDTH = 640;
-    private static final int VISIBLE_HEIGHT = 480;
+    public static final int VISIBLE_WIDTH = 640;
+    public static final int VISIBLE_HEIGHT = 480;
     public static final int HALF_VISIBLE_WIDTH = VISIBLE_WIDTH / 2;
     public static final int HALF_VISIBLE_HEIGHT = VISIBLE_HEIGHT / 2;
     public static final int SCROLLABLE_WIDTH = VISIBLE_WIDTH;
