@@ -215,6 +215,8 @@ public class Hero extends Actor
      */
     public void jump()
     {
+        
+        
         // Track vertical direction
         verticalDirection = JUMPING_UP;
 
@@ -233,6 +235,7 @@ public class Hero extends Actor
 
         // Make the character move vertically 
         fall();
+    
     }
 
     /**
@@ -257,6 +260,12 @@ public class Hero extends Actor
         }
 
         // Fall (move vertically)
+        // Three-part IF statement
+        // 1. Extreme bottom? Move normally ( y > VISIBLE_HEIGHT / 2 )
+        // 2. Extreme top? Move normally (y < VISIBLE_HEIGHT * 2 - HALF_VISIBLE_HEIGHT)
+        // 3. Move everything else
+        //      a. when deltaY is positive, character appears to move down (so really everything else moves up)
+        //      b. when deltaY is negative, character appears to move up (so really everything else moves down)
         int newVisibleWorldYPosition = getY() + deltaY;
         setLocation(getX(), newVisibleWorldYPosition );
 
@@ -343,7 +352,7 @@ public class Hero extends Actor
             // So... actually move the actor within the visible world.
 
             // Allow movement only when not at edge of world
-            if ( currentScrollableWorldYPosition < world.SCROLLABLE_HEIGHT - this.getImage().getWidth() / 2)
+            if ( currentScrollableWorldYPosition < world.SCROLLABLE_HEIGHT - this.getImage().getHeight() / 2)
             {
                 // Move to right in visible world
                 int newVisibleWorldYPosition = getY() + deltaY;
@@ -406,7 +415,7 @@ public class Hero extends Actor
         }   
 
     }
-
+        
     /**
      * Move the hero to the left.
      */

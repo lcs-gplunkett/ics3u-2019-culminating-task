@@ -67,7 +67,7 @@ public class SideScrollingWorld extends World
     {
         // How many tiles will cover the bottom of the initial visible area of screen?
         final int tilesToCreate = getWidth() / TILE_SIZE;
-
+        final int tilesToCreateAlso = getHeight()/  TILE_SIZE;
         // Loop to create and add the tile objects
         for (int i = 0; i < tilesToCreate; i += 1)
         {
@@ -80,6 +80,16 @@ public class SideScrollingWorld extends World
             Ground groundTile = new Ground(x, y);
 
             // Add the objects
+            addObject(groundTile, x, y);
+        }
+        
+        for (int i = 0; i < tilesToCreateAlso; i += 1)
+        {
+            int y = i * TILE_SIZE + TILE_SIZE /2;
+            int x = getWidth() - TILE_SIZE / 2; 
+            
+            Ground groundTile = new Ground(x, y);
+            
             addObject(groundTile, x, y);
         }
     }
@@ -185,6 +195,14 @@ public class SideScrollingWorld extends World
     private void addRightGround()
     {
         // Constants to control dimensions of the ground at end of world
+        
+        Ground ground = new Ground(100, 400);
+        addObject(ground, 100, 400);
+        Ground ground1 = new Ground(300, 300);
+        addObject(ground1, 300, 300);
+        Ground ground2 = new Ground(500, 150);
+        addObject(ground2, 500, 150);
+        
         //final int COUNT_OF_GROUND = 8;
         //final int GROUND_BELOW_COLUMNS = COUNT_OF_GROUND;
         //final int GROUND_BELOW_ROWS = 6;
