@@ -339,7 +339,7 @@ public class Hero extends Actor
             for (Platform platform : platforms)
             {
                 // Platforms move right to make hero appear to move left
-                platform.moveDown(-deltaY + 7);
+                platform.moveDown(-deltaY + 3);
             }
 
             // Get a list of all decorations (objects that need to move
@@ -350,7 +350,7 @@ public class Hero extends Actor
             for (Decoration decoration: decorations)
             {
                 // Platforms move right to make hero appear to move left
-                decoration.moveDown(-deltaY + 7);
+                decoration.moveDown(-deltaY + 3);
             }
 
             // Get a list of all items that are in the distance (far away items)
@@ -360,14 +360,12 @@ public class Hero extends Actor
             for (FarAwayItem farAwayItem : farAwayItems)
             {
                 // FarAwayItems move right to make hero appear to move left
-                farAwayItem.moveDown(-deltaY + 7 / 4);
+                farAwayItem.moveDown(-deltaY + 3 / 4);
             }
 
         } 
-        
-        
-    }
 
+    }
     /**
      * Animate walking
      */
@@ -628,11 +626,28 @@ public class Hero extends Actor
         //Vertical position where hero no longer visible
         int offScreenVerticalPosition = (world.getHeight() + this.getImage().getHeight() / 2);
 
-         //Off bottom of screen?
-        
+        // Off bottom of screen?
+        if (this.getY() > offScreenVerticalPosition)
+        {
+            // Remove the hero
+            isGameOver = true;
+            world.setGameOver();
+            world.removeObject(this);
+
+            // Tell the user game is over
+            world.showText("GAME OVER", world.getWidth() / 2, world.getHeight() / 2);
+
+        }
+        if (this.getY() > -1400)
+        {
+
+            isGameOver = true;
+            world.setGameOver();
+
+            // Tell the user game is over
+            world.showText("LEVEL COMPLETE", world.getWidth() / 2, world.getHeight() / 2);
+        }
 
     }
-
-    
 
 }

@@ -52,7 +52,7 @@ public class SideScrollingWorld extends World
      */
     private void setup()
     {
-        //addLeftGround();
+        addLeftGround();
         addFences();
         //addMetalPlateSteps();
         addClouds();
@@ -125,10 +125,6 @@ public class SideScrollingWorld extends World
         y = VISIBLE_HEIGHT / 2;
         Tree tree5 = new Tree(x, y);
         addObject(tree5, x, y);
-        
-        //Tree tree6 = new Tree (550, -1400);
-        //addObject(tree5, 550, -1400);
-       
     }
 
     /**
@@ -238,10 +234,10 @@ public class SideScrollingWorld extends World
         addObject(ground17, 400, -1075);
         Ground ground18 = new Ground(250, -1200);
         addObject(ground18, 250, -1200);
-        Ground ground19 = new Ground(450, -1325);
+        Ground ground19 = new Ground(450, -1350);
         addObject(ground19, 450, -1350);
-        Ground ground20 = new Ground(550, -1400 );
-        addObject(ground20, 500, -1400);
+        Ground ground20 = new Ground(550, -1450);
+        addObject(ground20, 550, -1450);
         
         
         //final int COUNT_OF_GROUND = 8;
