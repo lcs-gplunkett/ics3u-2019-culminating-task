@@ -364,7 +364,7 @@ public class Hero extends Actor
             }
 
         } 
-        checkGameOver();
+        
         
     }
 
@@ -629,28 +629,10 @@ public class Hero extends Actor
         int offScreenVerticalPosition = (world.getHeight() + this.getImage().getHeight() / 2);
 
          //Off bottom of screen?
-        if (getY() > 1200)
-        {
-            // Remove the hero
-           isGameOver = true;
-            world.setGameOver();
-            world.removeObject(this);
-
-            // Tell the user game is over
-            world.showText("GAME OVER", world.getWidth() / 2, world.getHeight() / 2);
-
-        }
-        if (getY() < 1200)
-        {
-
-            isGameOver = true;
-            world.setGameOver();
-
-            // Tell the user game is over
-            world.showText("LEVEL COMPLETE", world.getWidth() / 2, world.getHeight() / 2);
-        }
+        
 
     }
 
-        
+    
+
 }
