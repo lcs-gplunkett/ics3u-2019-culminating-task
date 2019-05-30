@@ -52,7 +52,7 @@ public class SideScrollingWorld extends World
      */
     private void setup()
     {
-        addLeftGround();
+        //addLeftGround();
         addFences();
         //addMetalPlateSteps();
         addClouds();
@@ -125,6 +125,10 @@ public class SideScrollingWorld extends World
         y = VISIBLE_HEIGHT / 2;
         Tree tree5 = new Tree(x, y);
         addObject(tree5, x, y);
+        
+        //Tree tree6 = new Tree (550, -1400);
+        //addObject(tree5, 550, -1400);
+       
     }
 
     /**
@@ -202,6 +206,43 @@ public class SideScrollingWorld extends World
         addObject(ground1, 300, 300);
         Ground ground2 = new Ground(500, 150);
         addObject(ground2, 500, 150);
+        Ground ground3 = new Ground(400, 50);
+        addObject(ground3, 400, 50);
+        Ground ground4 = new Ground(250, -25);
+        addObject(ground4, 250, 0);
+        Ground ground5 = new Ground(50, -75);
+        addObject(ground5, 50, -75);
+        Ground ground6 = new Ground(275, -125);
+        addObject(ground6, 275, -125);
+        Ground ground7 = new Ground(500, -200);
+        addObject(ground7, 500, -200);
+        Ground ground8 = new Ground(100, -300);
+        addObject(ground8, 100, -300);
+        Ground ground9 = new Ground(300, -450);
+        addObject(ground9, 300, -450);
+        Ground ground10 = new Ground(500, -550);
+        addObject(ground10, 500, -550);
+        Ground ground11 = new Ground(350, -670);
+        addObject(ground11, 350, -670);
+        Ground ground12 = new Ground(225, -700);
+        addObject(ground12, 225, -700);
+        Ground ground13 = new Ground(400, -775);
+        addObject(ground13, 400, -775);
+        Ground ground14 = new Ground(500, -875);
+        addObject(ground14, 500, -875);
+        Ground ground15 = new Ground(200, -925);
+        addObject(ground15, 200, -925);
+        Ground ground16 = new Ground(600, -975);
+        addObject(ground16, 600, -925);
+        Ground ground17 = new Ground( 400, -1075);
+        addObject(ground17, 400, -1075);
+        Ground ground18 = new Ground(250, -1200);
+        addObject(ground18, 250, -1200);
+        Ground ground19 = new Ground(450, -1325);
+        addObject(ground19, 450, -1350);
+        Ground ground20 = new Ground(550, -1400 );
+        addObject(ground20, 500, -1400);
+        
         
         //final int COUNT_OF_GROUND = 8;
         //final int GROUND_BELOW_COLUMNS = COUNT_OF_GROUND;

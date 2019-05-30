@@ -339,7 +339,7 @@ public class Hero extends Actor
             for (Platform platform : platforms)
             {
                 // Platforms move right to make hero appear to move left
-                platform.moveDown(-deltaY + 3);
+                platform.moveDown(-deltaY + 7);
             }
 
             // Get a list of all decorations (objects that need to move
@@ -350,7 +350,7 @@ public class Hero extends Actor
             for (Decoration decoration: decorations)
             {
                 // Platforms move right to make hero appear to move left
-                decoration.moveDown(-deltaY + 3);
+                decoration.moveDown(-deltaY + 7);
             }
 
             // Get a list of all items that are in the distance (far away items)
@@ -360,11 +360,11 @@ public class Hero extends Actor
             for (FarAwayItem farAwayItem : farAwayItems)
             {
                 // FarAwayItems move right to make hero appear to move left
-                farAwayItem.moveDown(-deltaY + 3 / 4);
+                farAwayItem.moveDown(-deltaY + 7 / 4);
             }
 
         } 
-
+        checkGameOver();
         
     }
 
@@ -628,11 +628,11 @@ public class Hero extends Actor
         //Vertical position where hero no longer visible
         int offScreenVerticalPosition = (world.getHeight() + this.getImage().getHeight() / 2);
 
-        // Off bottom of screen?
-        if (this.getY() > offScreenVerticalPosition)
+         //Off bottom of screen?
+        if (getY() > 1200)
         {
             // Remove the hero
-            isGameOver = true;
+           isGameOver = true;
             world.setGameOver();
             world.removeObject(this);
 
@@ -640,7 +640,7 @@ public class Hero extends Actor
             world.showText("GAME OVER", world.getWidth() / 2, world.getHeight() / 2);
 
         }
-        if (getY() > 1420)
+        if (getY() < 1200)
         {
 
             isGameOver = true;
