@@ -31,17 +31,17 @@ public abstract class Tile extends Actor
     /**
      * Move to left (to make hero look like they are moving right)
      */
-    public void moveLeftTile(int speed)
+    public void moveDown(int speed)
     {
-        setLocation(getX(), getY() - speed);
+        setLocation(getX(), getY() + speed);
     }
 
     /**
      * Move to right (to make hero look like they are moving left)
      */
-    public void moveRightTile(int speed)
+    public void moveUp(int speed)
     {
-        setLocation(getX(), getY() + speed);
+        setLocation(getX(), getY() - speed);
     }
     
 }

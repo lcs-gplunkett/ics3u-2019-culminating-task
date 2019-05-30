@@ -54,7 +54,7 @@ public class SideScrollingWorld extends World
     {
         addLeftGround();
         addFences();
-        addMetalPlateSteps();
+        //addMetalPlateSteps();
         addClouds();
         addRightGround();
         addHero();

@@ -24,7 +24,7 @@ public class Hero extends Actor
     private int acceleration = 2;
 
     // Strength of a jump
-    private int jumpStrength = -24;
+    private int jumpStrength = -16;
 
     // Track current theoretical position in wider "scrollable" world
     private int currentScrollableWorldXPosition;
@@ -243,7 +243,7 @@ public class Hero extends Actor
     public void fall()
     {
         // See if direction has changed
-        if (deltaX > 0)
+        if (deltaY > 0)
         {
             verticalDirection = JUMPING_DOWN;
 
@@ -272,154 +272,61 @@ public class Hero extends Actor
         // Accelerate (fall faster next time)
         deltaY = deltaY + acceleration;
 
-        //Reference to the world
-        SideScrollingWorld world = (SideScrollingWorld) getWorld();
-
-        if (currentScrollableWorldYPosition > world.VISIBLE_HEIGHT / 2)
-        {
-            // HERO IS WITHIN EXTREME BOTTOM PORTION OF SCROLLABLE WORLD
-            // So... actually move the actor within the visible world.
-
-            // Move up in visible world
-
-            setLocation(getX(), newVisibleWorldYPosition);
-
-            // Track position in wider scrolling world
-            currentScrollableWorldYPosition = getY();
-        }
-        else if (currentScrollableWorldYPosition  > world.VISIBLE_HEIGHT * 2 - world.HALF_VISIBLE_HEIGHT)
-        {
-            // HERO IS WITHIN EXTREME TOP PORTION OF SCROLLABLE WORLD
-            // So... actually move the actor within the visible world.
-
-            // Allow movement only when not at edge of world
-            if ( currentScrollableWorldYPosition < world.SCROLLABLE_HEIGHT - this.getImage().getHeight() / 2)
-            {
-                // Move to right in visible world
-
-                setLocation(getX(),newVisibleWorldYPosition);
-
-                // Track position in wider scrolling world
-                currentScrollableWorldYPosition += deltaY;
-            }
-            //else
-            //{
-            //isGameOver = true;
-            //world.setGameOver();
-
-            // // Tell the user game is over
-            //world.showText("LEVEL COMPLETE", world.getWidth() / 2, world.getHeight() / 2);
-            //}
-
-        }
-        else
-        {
-            // HERO IS BETWEEN LEFT AND RIGHT PORTIONS OF SCROLLABLE WORLD
-            // So... we move the other objects to create illusion of hero moving
-
-            // Track position in wider scrolling world
-            currentScrollableWorldYPosition += deltaY;
-
-            // Get a list of all platforms (objects that need to move
-            // to make hero look like they are moving)
-            List<Platform> platforms = world.getObjects(Platform.class);
-
-            // Move all the platform objects to make it look like hero is moving
-            for (Platform platform : platforms)
-            {
-                // Platforms move down to make hero appear to move right
-                platform.moveLeftTile(deltaY);
-            }
-
-            // Get a list of all decorations (objects that need to move
-            // to make hero look like they are moving)
-            List<Decoration> decorations = world.getObjects(Decoration.class);
-
-            // Move all the decoration objects to make it look like hero is moving
-            for (Decoration decoration: decorations)
-            {
-                // Platforms move left to make hero appear to move right
-                decoration.moveLeftTile(deltaY);
-            }
-
-            // Get a list of all farAwayItems (objects that need to move
-            // to make hero look like they are moving)
-            List<FarAwayItem> farAwayItems = world.getObjects(FarAwayItem.class);
-
-            // Move all the tile objects to make it look like hero is moving
-            for (FarAwayItem farAwayItem : farAwayItems)
-            {
-                // FarAwayItems move left to make hero appear to move right
-                farAwayItem.moveLeftTile(deltaY / 4);
-            }
-
-        }   
-
-    }
-
-    /**
-     * Move the hero to the left.
-     */
-    public void moveLeft()
-    {
-        // Track direction
-        horizontalDirection = FACING_LEFT;
-
-        // Set image 
-        if (onPlatform())
-        {
-            animateWalk(horizontalDirection);
-        }
-        else
-        {
-            // Set appropriate jumping image
-            if (verticalDirection == JUMPING_UP)
-            {
-                setImage("space-left-1.png");
-            }
-            else
-            {
-                setImage("space-left-0.png");
-            }
-        }
-
-        // Get object reference to world
         SideScrollingWorld world = (SideScrollingWorld) getWorld(); 
 
-        // Decide whether to actually move, or make world's tiles move
-        if (currentScrollableWorldYPosition - deltaY < world.HALF_VISIBLE_HEIGHT)
+        if (currentScrollableWorldYPosition > world.HALF_VISIBLE_HEIGHT)
         {
-            // HERO IS WITHIN EXTREME LEFT PORTION OF SCROLLABLE WORLD
+            // HERO IS WITHIN EXTREME LOWER PORTION OF SCROLLABLE WORLD
             // So... actually move the actor within the visible world.
+            System.out.println("extreme bottom");
+            // Don't let hero go off bottom of scrollable world 
+            // (Allow movement only when not at bottom edge)
+            System.out.println("y position is " + currentScrollableWorldYPosition);
+            System.out.println("world's height is " + world.VISIBLE_HEIGHT);
 
-            // Don't let hero go off left edge of scrollable world 
-            // (Allow movement only when not at left edge)
-            if (currentScrollableWorldYPosition > 0)
+            if (currentScrollableWorldYPosition < world.VISIBLE_HEIGHT)
             {
-                // Move left in visible world
-                int newVisibleWorldYPosition = getY() - deltaY;
-                setLocation(getX() ,newVisibleWorldYPosition);
+                // Move up in visible world
+
+                setLocation(getX(), newVisibleWorldYPosition);
+                System.out.println("in moving up part");
 
                 // Track position in wider scrolling world
                 currentScrollableWorldYPosition = getY();
             }            
         }
-        else if (currentScrollableWorldYPosition + deltaY * 2 > world.SCROLLABLE_HEIGHT - world.HALF_VISIBLE_HEIGHT)
+        else if (currentScrollableWorldYPosition + deltaY * 2 < (world.SCROLLABLE_HEIGHT - world.HALF_VISIBLE_HEIGHT) * -1)
         {
-            // HERO IS WITHIN EXTREME RIGHT PORTION OF SCROLLABLE WORLD
+
+            // HERO IS WITHIN EXTREME UPPER PORTION OF SCROLLABLE WORLD
             // So... actually move the actor within the visible world.
+            System.out.println("extreme top");
 
-            // Move left in visible world
-            int newVisibleWorldYPosition = getY() - deltaY;
-            setLocation(getX(), newVisibleWorldYPosition);
+            // Allow movement only when not at edge of world
+            if (currentScrollableWorldYPosition > world.VISIBLE_HEIGHT)
+            {
+                // Move up in visible world
 
-            // Track position in wider scrolling world
-            currentScrollableWorldYPosition -= deltaY;
+                setLocation(getX(), newVisibleWorldYPosition);
+
+                // Track position in taller scrolling world
+                currentScrollableWorldYPosition -= deltaY;
+            }
+            //else
+            //{
+            //isGameOver = true;
+            //world.setGameOver();
+            //
+            //// Tell the user game is over
+            //world.showText("LEVEL COMPLETE", world.getWidth() / 2, world.getHeight() / 2);
+            //}
+
         }        
-        else
+        else 
         {
             // HERO IS BETWEEN LEFT AND RIGHT PORTIONS OF SCROLLABLE WORLD
             // So... we move the other objects to create illusion of hero moving
+            System.out.println("in the middle");
 
             // Track position in wider scrolling world
             currentScrollableWorldYPosition -= deltaY;
@@ -432,7 +339,7 @@ public class Hero extends Actor
             for (Platform platform : platforms)
             {
                 // Platforms move right to make hero appear to move left
-                platform.moveRightTile(deltaY);
+                platform.moveDown(-deltaY + 3);
             }
 
             // Get a list of all decorations (objects that need to move
@@ -443,7 +350,7 @@ public class Hero extends Actor
             for (Decoration decoration: decorations)
             {
                 // Platforms move right to make hero appear to move left
-                decoration.moveRightTile(deltaY);
+                decoration.moveDown(-deltaY + 3);
             }
 
             // Get a list of all items that are in the distance (far away items)
@@ -453,10 +360,12 @@ public class Hero extends Actor
             for (FarAwayItem farAwayItem : farAwayItems)
             {
                 // FarAwayItems move right to make hero appear to move left
-                farAwayItem.moveRightTile(deltaY / 4);
+                farAwayItem.moveDown(-deltaY + 3 / 4);
             }
 
         } 
+
+        
     }
 
     /**
@@ -515,90 +424,92 @@ public class Hero extends Actor
                 setImage("space-right-0.png");
             }
         }
-
+        int newVisibleWorldXPosition = getX() + deltaX;
         // Get object reference to world
         SideScrollingWorld world = (SideScrollingWorld) getWorld(); 
 
+        setLocation(newVisibleWorldXPosition, getY());
+
         // Decide whether to actually move, or make world's tiles move
-        if (currentScrollableWorldYPosition < world.HALF_VISIBLE_HEIGHT)
-        {
-            // HERO IS WITHIN EXTREME LEFT PORTION OF SCROLLABLE WORLD
-            // So... actually move the actor within the visible world.
-
-            // Move to right in visible world
-            int newVisibleWorldYPosition = getY() + deltaY;
-            setLocation(getX(), newVisibleWorldYPosition);
-
-            // Track position in wider scrolling world
-            currentScrollableWorldYPosition = getY();
-        }
-        else if (currentScrollableWorldYPosition + deltaY * 2 > world.SCROLLABLE_HEIGHT - world.HALF_VISIBLE_HEIGHT)
-        {
-            // HERO IS WITHIN EXTREME RIGHT PORTION OF SCROLLABLE WORLD
-            // So... actually move the actor within the visible world.
-
-            // Allow movement only when not at edge of world
-            if ( currentScrollableWorldYPosition < world.SCROLLABLE_HEIGHT - this.getImage().getHeight() / 2)
-            {
-                // Move to right in visible world
-                int newVisibleWorldYPosition = getY() + deltaY;
-                setLocation(getX(),newVisibleWorldYPosition);
-
-                // Track position in wider scrolling world
-                currentScrollableWorldYPosition += deltaY;
-            }
-            //else
-            //{
-            //isGameOver = true;
-            //world.setGameOver();
-
-            // // Tell the user game is over
-            //world.showText("LEVEL COMPLETE", world.getWidth() / 2, world.getHeight() / 2);
-            //}
-
-        }
-        else
-        {
-            // HERO IS BETWEEN LEFT AND RIGHT PORTIONS OF SCROLLABLE WORLD
-            // So... we move the other objects to create illusion of hero moving
-
-            // Track position in wider scrolling world
-            currentScrollableWorldYPosition += deltaY;
-
-            // Get a list of all platforms (objects that need to move
-            // to make hero look like they are moving)
-            List<Platform> platforms = world.getObjects(Platform.class);
-
-            // Move all the platform objects to make it look like hero is moving
-            for (Platform platform : platforms)
-            {
-                // Platforms move down to make hero appear to move right
-                platform.moveLeftTile(deltaY);
-            }
-
-            // Get a list of all decorations (objects that need to move
-            // to make hero look like they are moving)
-            List<Decoration> decorations = world.getObjects(Decoration.class);
-
-            // Move all the decoration objects to make it look like hero is moving
-            for (Decoration decoration: decorations)
-            {
-                // Platforms move left to make hero appear to move right
-                decoration.moveLeftTile(deltaY);
-            }
-
-            // Get a list of all farAwayItems (objects that need to move
-            // to make hero look like they are moving)
-            List<FarAwayItem> farAwayItems = world.getObjects(FarAwayItem.class);
-
-            // Move all the tile objects to make it look like hero is moving
-            for (FarAwayItem farAwayItem : farAwayItems)
-            {
-                // FarAwayItems move left to make hero appear to move right
-                farAwayItem.moveLeftTile(deltaY / 4);
-            }
-
-        }   
+        //if (currentScrollableWorldYPosition < world.HALF_VISIBLE_HEIGHT)
+        //{
+        //  // HERO IS WITHIN EXTREME LEFT PORTION OF SCROLLABLE WORLD
+        //  // So... actually move the actor within the visible world.
+        //
+        //  // Move to right in visible world
+        //  int newVisibleWorldYPosition = getY() + deltaY;
+        //  setLocation(getX(), newVisibleWorldYPosition);
+        //
+        //  // Track position in wider scrolling world
+        //  currentScrollableWorldYPosition = getY();
+        //}
+        //else if (currentScrollableWorldYPosition + deltaY * 2 > world.SCROLLABLE_HEIGHT - world.HALF_VISIBLE_HEIGHT)
+        //{
+        // // HERO IS WITHIN EXTREME RIGHT PORTION OF SCROLLABLE WORLD
+        // // So... actually move the actor within the visible world.
+        //
+        // // Allow movement only when not at edge of world
+        // if ( currentScrollableWorldYPosition < world.SCROLLABLE_HEIGHT - this.getImage().getHeight() / 2)
+        // {
+        //       // Move to right in visible world
+        //       int newVisibleWorldYPosition = getY() + deltaY;
+        //       setLocation(getX(),newVisibleWorldYPosition);
+        //
+        //       // Track position in wider scrolling world
+        //       currentScrollableWorldYPosition += deltaY;
+        //   }
+        //   //else
+        //   //{
+        //   //isGameOver = true;
+        //   //world.setGameOver();
+        //
+        //   // // Tell the user game is over
+        //   //world.showText("LEVEL COMPLETE", world.getWidth() / 2, world.getHeight() / 2);
+        //   //}
+        //
+        // }
+        //else
+        //{
+        //  // HERO IS BETWEEN LEFT AND RIGHT PORTIONS OF SCROLLABLE WORLD
+        //  // So... we move the other objects to create illusion of hero moving
+        //
+        //  // Track position in wider scrolling world
+        //  currentScrollableWorldYPosition += deltaY;
+        //
+        //  // Get a list of all platforms (objects that need to move
+        //  // to make hero look like they are moving)
+        //  List<Platform> platforms = world.getObjects(Platform.class);
+        //
+        //  // Move all the platform objects to make it look like hero is moving
+        //  for (Platform platform : platforms)
+        //  {
+        //      // Platforms move down to make hero appear to move right
+        //      platform.moveDown(deltaY);
+        //  }
+        //
+        //  // Get a list of all decorations (objects that need to move
+        //  // to make hero look like they are moving)
+        //  List<Decoration> decorations = world.getObjects(Decoration.class);
+        //
+        //  // Move all the decoration objects to make it look like hero is moving
+        //  for (Decoration decoration: decorations)
+        //  {
+        //      // Platforms move left to make hero appear to move right
+        ///      decoration.moveDown(deltaY);
+        //  }
+        //
+        //  // Get a list of all farAwayItems (objects that need to move
+        //  // to make hero look like they are moving)
+        //  List<FarAwayItem> farAwayItems = world.getObjects(FarAwayItem.class);
+        //
+        //  // Move all the tile objects to make it look like hero is moving
+        //  for (FarAwayItem farAwayItem : farAwayItems)
+        //  {
+        //      // FarAwayItems move left to make hero appear to move right
+        //      farAwayItem.moveDown(deltaY / 4);
+        //  }
+        //
+        //}   
 
     }
 
@@ -632,76 +543,76 @@ public class Hero extends Actor
         SideScrollingWorld world = (SideScrollingWorld) getWorld(); 
 
         // Decide whether to actually move, or make world's tiles move
-        if (currentScrollableWorldYPosition - deltaY < world.HALF_VISIBLE_HEIGHT)
-        {
-            // HERO IS WITHIN EXTREME LEFT PORTION OF SCROLLABLE WORLD
-            // So... actually move the actor within the visible world.
+        //if (currentScrollableWorldYPosition - deltaY < world.HALF_VISIBLE_HEIGHT)
+        //{
+        // HERO IS WITHIN EXTREME LEFT PORTION OF SCROLLABLE WORLD
+        // So... actually move the actor within the visible world.
 
-            // Don't let hero go off left edge of scrollable world 
-            // (Allow movement only when not at left edge)
-            if (currentScrollableWorldYPosition > 0)
-            {
-                // Move left in visible world
-                int newVisibleWorldYPosition = getY() - deltaY;
-                setLocation(getX() ,newVisibleWorldYPosition);
+        // Don't let hero go off left edge of scrollable world 
+        // (Allow movement only when not at left edge)
+        //  if (currentScrollableWorldYPosition > 0)
+        //  {
+        //      // Move left in visible world
+        //      int newVisibleWorldYPosition = getY() - deltaY;
+        //      setLocation(getX() ,newVisibleWorldYPosition);
+        //
+        //      // Track position in wider scrolling world
+        //      currentScrollableWorldYPosition = getY();
+        //  }            
+        //}
+        //else if (currentScrollableWorldYPosition + deltaY * 2 > world.SCROLLABLE_HEIGHT - world.HALF_VISIBLE_HEIGHT)
+        //{
+        // HERO IS WITHIN EXTREME RIGHT PORTION OF SCROLLABLE WORLD
+        // So... actually move the actor within the visible world.
 
-                // Track position in wider scrolling world
-                currentScrollableWorldYPosition = getY();
-            }            
-        }
-        else if (currentScrollableWorldYPosition + deltaY * 2 > world.SCROLLABLE_HEIGHT - world.HALF_VISIBLE_HEIGHT)
-        {
-            // HERO IS WITHIN EXTREME RIGHT PORTION OF SCROLLABLE WORLD
-            // So... actually move the actor within the visible world.
-
-            // Move left in visible world
-            int newVisibleWorldYPosition = getY() - deltaY;
-            setLocation(getX(), newVisibleWorldYPosition);
-
-            // Track position in wider scrolling world
-            currentScrollableWorldYPosition -= deltaY;
-        }        
-        else
-        {
-            // HERO IS BETWEEN LEFT AND RIGHT PORTIONS OF SCROLLABLE WORLD
-            // So... we move the other objects to create illusion of hero moving
-
-            // Track position in wider scrolling world
-            currentScrollableWorldYPosition -= deltaY;
-
-            // Get a list of all platforms (objects that need to move
-            // to make hero look like they are moving)
-            List<Platform> platforms = world.getObjects(Platform.class);
-
-            // Move all the platform objects at same speed as hero
-            for (Platform platform : platforms)
-            {
-                // Platforms move right to make hero appear to move left
-                platform.moveRight(deltaY);
-            }
-
-            // Get a list of all decorations (objects that need to move
-            // to make hero look like they are moving)
-            List<Decoration> decorations = world.getObjects(Decoration.class);
-
-            // Move all the decoration objects to make it look like hero is moving
-            for (Decoration decoration: decorations)
-            {
-                // Platforms move right to make hero appear to move left
-                decoration.moveRight(deltaY);
-            }
-
-            // Get a list of all items that are in the distance (far away items)
-            List<FarAwayItem> farAwayItems = world.getObjects(FarAwayItem.class);
-
-            // Move all the FarAwayItem objects at one quarter speed as hero to create depth illusion
-            for (FarAwayItem farAwayItem : farAwayItems)
-            {
-                // FarAwayItems move right to make hero appear to move left
-                farAwayItem.moveRight(deltaY / 4);
-            }
-
-        } 
+        // Move left in visible world
+        int newVisibleWorldXPosition = getX() - deltaX;
+        setLocation(newVisibleWorldXPosition, getY());
+        //
+        //  // Track position in wider scrolling world
+        //  currentScrollableWorldYPosition -= deltaY;
+        //}        
+        //else
+        //{
+        //  // HERO IS BETWEEN LEFT AND RIGHT PORTIONS OF SCROLLABLE WORLD
+        //  // So... we move the other objects to create illusion of hero moving
+        //
+        //  // Track position in wider scrolling world
+        //  currentScrollableWorldYPosition -= deltaY;
+        //
+        //  // Get a list of all platforms (objects that need to move
+        //  // to make hero look like they are moving)
+        //  List<Platform> platforms = world.getObjects(Platform.class);
+        //
+        //  // Move all the platform objects at same speed as hero
+        //  for (Platform platform : platforms)
+        //  {
+        //      // Platforms move right to make hero appear to move left
+        //      platform.moveDown(deltaY);
+        //  }
+        //
+        //  // Get a list of all decorations (objects that need to move
+        //  // to make hero look like they are moving)
+        //  List<Decoration> decorations = world.getObjects(Decoration.class);
+        //
+        //  // Move all the decoration objects to make it look like hero is moving
+        //  for (Decoration decoration: decorations)
+        //  {
+        //      // Platforms move right to make hero appear to move left
+        //      decoration.moveUp(deltaY);
+        //  }
+        //
+        //  // Get a list of all items that are in the distance (far away items)
+        //  List<FarAwayItem> farAwayItems = world.getObjects(FarAwayItem.class);
+        //
+        //  // Move all the FarAwayItem objects at one quarter speed as hero to create depth illusion
+        //  for (FarAwayItem farAwayItem : farAwayItems)
+        //  {
+        //      // FarAwayItems move right to make hero appear to move left
+        //      farAwayItem.moveUp(deltaY / 4);
+        //  }
+        //
+        //} 
 
     }
 
@@ -727,6 +638,19 @@ public class Hero extends Actor
 
             // Tell the user game is over
             world.showText("GAME OVER", world.getWidth() / 2, world.getHeight() / 2);
+
         }
+        if (getY() > 1420)
+        {
+
+            isGameOver = true;
+            world.setGameOver();
+
+            // Tell the user game is over
+            world.showText("LEVEL COMPLETE", world.getWidth() / 2, world.getHeight() / 2);
+        }
+
     }
+
+        
 }
