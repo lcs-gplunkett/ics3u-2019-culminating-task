@@ -339,7 +339,7 @@ public class Hero extends Actor
             for (Platform platform : platforms)
             {
                 // Platforms move right to make hero appear to move left
-                platform.moveDown(-deltaY + 3);
+                platform.moveDown(-deltaY + 5);
             }
 
             // Get a list of all decorations (objects that need to move
@@ -350,7 +350,7 @@ public class Hero extends Actor
             for (Decoration decoration: decorations)
             {
                 // Platforms move right to make hero appear to move left
-                decoration.moveDown(-deltaY + 3);
+                decoration.moveDown(-deltaY + 5);
             }
 
             // Get a list of all items that are in the distance (far away items)
@@ -360,7 +360,7 @@ public class Hero extends Actor
             for (FarAwayItem farAwayItem : farAwayItems)
             {
                 // FarAwayItems move right to make hero appear to move left
-                farAwayItem.moveDown(-deltaY + 3 / 4);
+                farAwayItem.moveDown(-deltaY + 5 / 4);
             }
 
         } 
